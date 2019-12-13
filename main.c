@@ -1,11 +1,14 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include<locale.h>
 void menu();
 void sehirEkle();
 void sehirAra();
 void isimArama();
 void plakaArama();
+void dosyaOku();
+void parcala(char kelime[200]);
 struct node
 {
     int plaka;
@@ -18,6 +21,10 @@ struct node
 };
 struct node * root;
 
+struct komsuNode{
+int plaka;
+struct komsuNode * ileri;
+};
 
 struct node * ekle(struct node * r,int plaka,char sehirAdi[20],char bolge[5],int komsu_sayisi){
     if(r == NULL)
@@ -95,14 +102,22 @@ struct node * ekle(struct node * r,int plaka,char sehirAdi[20],char bolge[5],int
 int sehirKontrol(struct node* r,int plaka){
     struct node * iter;
     iter = r;
-    int status = 0; //0 sehir yok 1 sehir var
-    while(iter != NULL)
+    int status = 0; //0 sehir yok 1 sehir var 2 plaka hatali
+    if(plaka > 0)
+    {
+        while(iter != NULL)
     {
         if(iter->plaka == plaka)
         {
             status = 1;
         }
         iter = iter->ileri;
+    }
+
+    } else
+    {
+        status = 2;
+
     }
 
     return status;
@@ -126,7 +141,9 @@ void ekranaYaz(struct node* r){
 
 }
 int main(){
+    setlocale(LC_ALL, "Turkish");
     root = NULL;
+    dosyaOku();
     while(1)
     {
         menu();
@@ -177,8 +194,10 @@ void sehirEkle(){
     if(sehirKontrol(root,plaka)  == 0)
     {
         root = ekle(root,plaka,sehirAdi,bolge,0);
-    } else {
+    } else if(sehirKontrol(root,plaka) == 1) {
         printf("Boyle bir sehir var. Tekrar ekleyemessiniz\n");
+    }  else {
+        printf("Plaka Hatali %d",plaka);
     }
 
 
@@ -252,8 +271,76 @@ void plakaArama(){
 
 
 }
+void dosyaOku(){
+FILE *dosya;
+dosya = fopen("sehirler.txt","r");
+if(dosya){
+    printf("Sehir Listesi Bulundu...\n");
+    printf("Sisteme Aktariliyor.....\n");
+
+
+   char birkelime[200];
+   int c;
+   do {
+
+     c = fscanf(dosya,"%s",birkelime);
+    if (feof(dosya)){break;}
+     parcala(birkelime);
+   } while (c != EOF);
+   fclose(dosya);
 
 
 
+}else{
 
+printf("Ana dizinde sehirler.txt dosyasi bulunamadi.!!!");
+exit(404);
+
+}
+
+
+}
+void parcala(char kelime[200]){
+    const char s[4] = ",";
+    char *token;
+    int plaka;
+    char *sehirAdi[20];
+    char *bolge[5];
+
+    token = strtok(kelime, s);
+
+    int a = 0;
+    while( token != NULL ) {
+
+      if(a == 0)
+      {
+        plaka = atoi(token);
+        //printf("%d\n", plaka);
+        if(sehirKontrol(root,plaka) == 1)
+        {
+            printf("Listede ayni sehirden birden fazla var. Plaka NO: %d\n",plaka);
+            plaka = 0;
+
+        }
+      }
+      if(a == 1)
+      {
+
+          *sehirAdi = token;
+          //printf( "%d-) %s | ",a, *sehirAdi);
+      }
+      if(a == 2)
+      {
+          *bolge = token;
+          //printf( "%d-) %s \n",a, *bolge);
+          if(plaka != 0 && *bolge != NULL && sehirAdi != NULL)
+          {
+             root =  ekle(root,plaka,*sehirAdi,*bolge,0);
+          }
+      }
+      a++;
+
+      token = strtok(NULL, s);
+   }
+}
 
