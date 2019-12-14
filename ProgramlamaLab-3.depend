@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1576265235 source:c:\programlamalab-3\main.c
+1576288473 source:c:\programlamalab-3\main.c
 	<stdio.h>
 	<string.h>
 	<stdlib.h>
