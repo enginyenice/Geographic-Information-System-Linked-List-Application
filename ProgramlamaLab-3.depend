@@ -1,7 +1,8 @@
 # depslib dependency file v1.0
-1576288473 source:c:\programlamalab-3\main.c
+1576701222 source:c:\programlamalab-3\main.c
 	<stdio.h>
 	<string.h>
 	<stdlib.h>
-	<locale.h>
+	<time.h>
+	<windows.h>
 
