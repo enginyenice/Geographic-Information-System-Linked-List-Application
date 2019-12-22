@@ -5,6 +5,8 @@
 #include <windows.h>
 
 //TODO: Komsuya kendisini komsu ekliyor.
+
+
 /* Nodelar */
 struct node
 {
@@ -911,7 +913,7 @@ void sehirSil()
 {
     system("cls");
     fprintf(yazilacakDosya,"Sehir Silme\n");
-    int plaka;
+    int plaka = 0;
     char sehirAdi[20];
     menuAdiOlustur("000",1,1);
     menuAdiOlustur("     SEHIR SILME",10,0);
@@ -919,7 +921,7 @@ void sehirSil()
     menuAdiOlustur("2-)Isime Gore   ",12,0);
     menuAdiOlustur("000",1,1);
     menuAdiOlustur("Secim Yap: ",15,2);
-    int secim;
+    int secim = 0;
     scanf("%d",&secim);
     int searchStatus = 0;
 
@@ -1041,6 +1043,7 @@ void sehirSil()
         }
 
     }
+
     system("PAUSE");
     system("CLS");
 }
@@ -1062,6 +1065,9 @@ int komsuPlakaBul(struct node *r, char sehirAdi[20])
         }
         iter = iter->ileri;
     }
+
+        printf("!!Dosya hatali!!");
+        exit(404);
     return -999;
 }
 int komsuKontrol(struct node* r,int plaka,int sehirPlaka)
@@ -1121,6 +1127,157 @@ void komsuSilAuto(struct node *r,int plaka)
 }
 void sehirDuzenle()
 {
+
+
+
+    system("cls");
+    fprintf(yazilacakDosya,"Sehir Duzenle\n");
+    int plaka = 0;
+    char sehirAdi[20];
+    menuAdiOlustur("000",1,1);
+    menuAdiOlustur("   SEHIR DUZENLE",10,0);
+    menuAdiOlustur("     SEHRI BUL  ",11,0);
+    menuAdiOlustur("1-)Plakaya Gore ",12,0);
+    menuAdiOlustur("2-)Isime Gore   ",13,0);
+    menuAdiOlustur("000",1,1);
+    menuAdiOlustur("Secim Yap: ",15,2);
+    int secim = 0;
+    int sonuc = 0;
+
+    scanf("%d",&secim);
+    int searchStatus = 0;
+
+if(secim == 1)
+{
+    printf("Plaka Giriniz: ");
+    scanf("%d",plaka);
+    sonuc = sehirKontrol(root,plaka);
+
+}
+else if(secim == 2)
+{
+    printf("Sehir Adi Giriniz: ");
+    scanf("%s",sehirAdi);
+    sonuc = sehirIsimKontrol(root,sehirAdi);
+
+}
+ if(sonuc == 1)
+    {
+        if(secim == 2)
+        {
+            struct node *sehirPlakaCevir;
+            sehirPlakaCevir = root;
+            while(sehirPlakaCevir != NULL)
+            {
+                if(strcasecmp(sehirPlakaCevir->sehirAdi,sehirAdi) == 0)
+                {
+                    break;
+                }
+                sehirPlakaCevir = sehirPlakaCevir->ileri;
+            }
+            plaka = sehirPlakaCevir->plaka;
+
+
+        }
+        char sehirAdi[20];
+        char bolge[5];
+        int yeniPlaka;
+        printf("Plaka: ");
+        scanf("%d",&yeniPlaka);
+        printf("Sehir adi: ");
+        scanf("%s",sehirAdi);
+        printf("Bolge adi: ");
+        scanf("%s",bolge);
+        int yeniPlakaKontrol = sehirKontrol(root,yeniPlaka);
+        int yeniIsimKontrol = sehirIsimKontrol(root,sehirAdi);
+        if(yeniPlakaKontrol == 1)
+        {
+            fprintf(yazilacakDosya,"%d Plaka numarasina ait baska bir sehir var.\n",yeniPlaka);
+            printf("Yeni plakaya ait baska bir sehir var.\n");
+            system("PAUSE");
+            sehirDuzenle();
+        }
+        else if(yeniIsimKontrol == 1)
+        {
+            fprintf(yazilacakDosya,"%s Sehir adina ait baska bir sehir var.\n",sehirAdi);
+            printf("Yeni isime ait baska bir sehir var.%s\n ",sehirAdi);
+            system("PAUSE");
+            sehirDuzenle();
+        }
+        else if(yeniPlakaKontrol == 0 && yeniIsimKontrol == 0)
+        {
+
+            // Sehri Ekledik.
+            root = ekle(root,yeniPlaka,sehirAdi,bolge,0);
+            struct node *yeniSehir;
+            struct node *eskiSehir;
+            yeniSehir = root;
+            eskiSehir = root;
+            while(yeniSehir->plaka != yeniPlaka)
+            {
+                yeniSehir = yeniSehir->ileri;
+            }
+            while(eskiSehir->plaka != plaka)
+            {
+                eskiSehir = eskiSehir->ileri;
+            }
+
+            fprintf(yazilacakDosya,"Duzenleme Oncesi: [%d] %s %s %d\n",eskiSehir->plaka,eskiSehir->sehirAdi,eskiSehir->bolge,eskiSehir->komsu_sayisi);
+            yeniSehir->komsuNode = eskiSehir->komsuNode;
+            yeniSehir->komsu_sayisi = eskiSehir->komsu_sayisi;
+            sil(root,eskiSehir,plaka);
+
+            struct node * Yiter;
+            Yiter = root;
+            while(Yiter != NULL)
+            {
+                struct komsuNode *kroot;
+                struct komsuNode *kiter;
+                kroot = (void *)Yiter->komsuNode;
+                kiter = kroot;
+                int kont = 0;
+                while(kiter != NULL)
+                {
+                    if(kiter->komPlaka == plaka)
+                    {
+                        kroot = komekle(kroot,yeniPlaka,Yiter->plaka);
+                        kont = 1;
+                    }
+
+                    kiter = kiter->komIleri;
+                }
+                if(kont == 1)
+                {
+                    komsuSilAuto(Yiter,plaka);
+                }
+                Yiter= Yiter->ileri;
+            }
+            fprintf(yazilacakDosya,"Duzenleme Sonrasi: [%d] %s %s %d\n",yeniSehir->plaka,yeniSehir->sehirAdi,yeniSehir->bolge,yeniSehir->komsu_sayisi);
+        }
+    }
+    else if(sonuc == 0)
+    {
+        // Sehir Yok
+        printf("Sehir yok eklemek ister misiniz?\n");
+        int soru;
+        printf("Hayir ise 0 Evet ise 1");
+        scanf("%d",&soru);
+        switch(soru)
+        {
+        case 0:
+            break;
+        case 1:
+            sehirEkle();
+            break;
+        }
+    }
+
+
+
+
+
+/*
+
     fprintf(yazilacakDosya,"Sehir Duzenle\n");
     int plaka;
     printf("Duzenlemek istediginiz sehrin plakasi: ");
@@ -1221,6 +1378,7 @@ void sehirDuzenle()
             break;
         }
     }
+    */
 }
 void komsuEkle(struct node *r,int sehirPlaka)
 {
@@ -1364,7 +1522,6 @@ void menuAdiOlustur(char menuAdi[100],int renk,int son)
 
     SetConsoleTextAttribute(hConsole, FOREGROUND_GREEN | FOREGROUND_BLUE | FOREGROUND_RED);
 }
-
 void renkDegistir(int renk)
 {
     HANDLE hConsole;
@@ -1385,7 +1542,7 @@ void bolgeRenkleri(char bolge[5])
     else if(strcasecmp(bolge,"DA") == 0)
         renkDegistir(5);
     else if(strcasecmp(bolge,"EG") == 0)
-        renkDegistir(7);
+        renkDegistir(15);
     else if(strcasecmp(bolge,"GA") == 0)
         renkDegistir(11);
     else
