@@ -3,13 +3,13 @@ Programlama Laboratuvarı 3. Proje Bagli Liste Uygulamasi
 Proje 3: Bağlı Liste Uygulaması
 Son Teslim Tarihi: 29 Aralık 2019
 Arş. Gör. Abdurrahman Gün, Arş. Gör. Burcu KIR SAVAŞ
-  Coğrafi Bilgi Sistemi (CBS), dünya üzerindeki karmaşık sosyal, ekonomik, 
+ ##Coğrafi Bilgi Sistemi (CBS), dünya üzerindeki karmaşık sosyal, ekonomik, 
 çevresel vb. sorunların çözümüne yönelik mekâna/konuma dayalı karar verme süreçlerinde kullanıcılara
 yardımcı olmak üzere, büyük hacimli coğrafi verilerin; toplanması, depolanması, işlenmesi, yönetimi,
 mekânsal analizi, sorgulaması ve sunulması fonksiyonlarını yerine getiren donanım, yazılım, personel, coğrafi veri ve
 yöntem bütünüdür. Bu proje kapsamında, şehirlerin komşuluk ilişkilerini dikkate alan çok basit bir harita verisi üzerinde
 bağlı listelerle ilgili temel işlevleri yerine getiren bir uygulama yapılması beklenmektedir.
-  Bu modelde her bir şehrin dört tane özelliğe sahip olduğu bilinmektedir:
+  ##Bu modelde her bir şehrin dört tane özelliğe sahip olduğu bilinmektedir:
 şehrin ismi, plaka kodu, hangi bölgede olduğu ve bu şehirden direk ulaşılabilen (komşu) şehirler. 
 Şehirler arasındaki komşuluk ilişkisi bir pointer (işaretçi) yardımıyla tutulabilir. 
 Artık her bir şehir bir bağlı listenin düğümleri şeklinde tutulabilir. 
