@@ -1,0 +1,18 @@
+Olusturulma Tarihi : Tue Dec 24 18:26:52 2019
+
+Arama Islemi 
+Minimum Komsu Sayisi: 0
+Maksimum Komsu Sayisi(0 sonsuzu gosterir): 9
+Plaka:[1] 	 Sehir Adi:Adana	Bolge: AK 	 Komsu Sayisi: 2
+Plaka:[2] 	 Sehir Adi:Adiyaman	Bolge: GA 	 Komsu Sayisi: 2
+Plaka:[3] 	 Sehir Adi:Afyonkarahisar	Bolge: EG 	 Komsu Sayisi: 2
+Adana ile Adiyaman Isismlerine Ortak Sehirler
+[3] Afyonkarahisar EG
+Arama Islemi 
+Minimum Komsu Sayisi: 0
+Maksimum Komsu Sayisi(0 sonsuzu gosterir): 10
+Plaka:[1] 	 Sehir Adi:Adana	Bolge: AK 	 Komsu Sayisi: 2
+Plaka:[2] 	 Sehir Adi:Adiyaman	Bolge: GA 	 Komsu Sayisi: 2
+Plaka:[3] 	 Sehir Adi:Afyonkarahisar	Bolge: EG 	 Komsu Sayisi: 2
+2 ile 3 Plakalarina Ortak Sehirler
+[1] Adana AK
