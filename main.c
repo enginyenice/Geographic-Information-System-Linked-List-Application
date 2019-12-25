@@ -4,7 +4,6 @@
 #include <time.h>
 #include <windows.h>
 
-//TODO: Komsu Ekle Sehir Ismi Ile !!!
 
 /* Nodelar */
 struct node
@@ -1710,7 +1709,7 @@ void menuAdiOlustur(char menuAdi[100],int renk,int son)
 
         colors = 3;
         SetConsoleTextAttribute(hConsole, colors);
-        printf("\t         |                    ");
+        printf("\t\t              |                    ");
         colors = renk;
         SetConsoleTextAttribute(hConsole, colors);
         printf("%s",menuAdi);
@@ -1724,13 +1723,13 @@ void menuAdiOlustur(char menuAdi[100],int renk,int son)
     {
         colors = 3;
         SetConsoleTextAttribute(hConsole, colors);
-        printf("\t         ############################################################\n");
+        printf("\t\t              ############################################################\n");
     }
     else if(son == 2)
     {
         colors = 3;
         SetConsoleTextAttribute(hConsole, colors);
-        printf("\t          ");
+        printf("\t\t               ");
         colors = renk;
         SetConsoleTextAttribute(hConsole, colors);
         printf("%s",menuAdi);
