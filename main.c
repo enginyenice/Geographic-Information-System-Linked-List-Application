@@ -4,8 +4,7 @@
 #include <time.h>
 #include <windows.h>
 
-//TODO: Komsuya kendisini komsu ekliyor.
-
+//TODO: Komsu Ekle Sehir Ismi Ile !!!
 
 /* Nodelar */
 struct node
@@ -39,6 +38,7 @@ void kriterArama();
 int komsuPlakaBul(struct node *r, char sehirAdi[20]);
 void komsuIslemMenu(struct node *iter,int sehirPlaka);
 void isimArama();
+int sehirToPlaka(char sehirAdi[20]);
 
 /* Okuma */
 FILE *yazilacakDosya;
@@ -468,9 +468,53 @@ void menu()
 }
 void komsuSil(struct node *r)
 {
-    int plaka;
-    printf("Silmek istenilen komsunun plakasi: ");
-    scanf("%d",&plaka);
+
+    int plaka = -999;
+    char sehirAdi[20];
+    //printf("Silmek istenilen komsunun plakasi: ");
+    int secim;
+    komsuSilGo:
+    menuAdiOlustur("000",1,1);
+    menuAdiOlustur("     ISLEMLER   ",10,0);
+    menuAdiOlustur("1-)Isime gore   ",11,0);
+    menuAdiOlustur("2-)Plakaya gore ",12,0);
+    menuAdiOlustur("0-)Geri         ",15,0);
+    menuAdiOlustur("000",1,1);
+    menuAdiOlustur("Secim Yap: ",15,2);
+    scanf("%d",&secim);
+
+    switch(secim)
+    {
+    case 1:
+        printf("Sehir Adi giriniz: ");
+        struct node * iter;
+        iter = root;
+        scanf("%s",sehirAdi);
+        while(iter != NULL)
+        {
+            if(strcasecmp(iter->sehirAdi,sehirAdi) == 0)
+            {
+                plaka = iter->plaka;
+            }
+            iter = iter->ileri;
+
+        }
+
+
+        break;
+    case 2:
+
+        printf("Plaka giriniz: ");
+        scanf("%d",&plaka);
+        break;
+    case 0:
+        menu();
+        break;
+    }
+
+
+
+
     struct komsuNode * kiter;
     struct komsuNode * kroot;
     kroot = (void *)r->komsuNode;
@@ -511,6 +555,9 @@ void komsuSil(struct node *r)
     {
 
         printf("\n!!!Komsu bulunamadi!!!\n");
+        system("PAUSE");
+        system("cls");
+        goto komsuSilGo;
     }
 
     system("PAUSE");
@@ -662,7 +709,7 @@ islemeDon:
         menuAdiOlustur("000",1,1);
         menuAdiOlustur("1-) Isime gore  ",4,0);
         menuAdiOlustur("2-) Plakaya gore",3,0);
-        menuAdiOlustur("0-) Geri",3,0);
+        menuAdiOlustur("0-) Geri  git   ",3,0);
         menuAdiOlustur("000",1,1);
         menuAdiOlustur("Secim Yap: ",15,2);
         scanf("%d",&plakaOrIsim);
@@ -687,9 +734,9 @@ islemeDon:
             {
 
                 printf("1. Sehrin Ismini Giriniz: ");
-                scanf("%s",&sehirAdi1);
+                scanf("%s",sehirAdi1);
                 printf("2. Sehrin Ismini Giriniz: ");
-                scanf("%s",&sehirAdi2);
+                scanf("%s",sehirAdi2);
                 plaka1 = sehirToPlaka(sehirAdi1);
                 plaka2 = sehirToPlaka(sehirAdi2);
 
@@ -805,9 +852,6 @@ islemeDon:
     system("PAUSE");
 
 }
-
-
-
 int sehirToPlaka(char sehirAdi[20])
 {
     struct node *iter;
@@ -1350,9 +1394,6 @@ void komsuSilAuto(struct node *r,int plaka)
 }
 void sehirDuzenle()
 {
-
-
-
     system("cls");
     fprintf(yazilacakDosya,"Sehir Duzenle\n");
     int plaka = 0;
@@ -1494,131 +1535,81 @@ void sehirDuzenle()
             break;
         }
     }
-
-
-
-
-
-    /*
-
-        fprintf(yazilacakDosya,"Sehir Duzenle\n");
-        int plaka;
-        printf("Duzenlemek istediginiz sehrin plakasi: ");
-        scanf("%d",&plaka);
-
-        int sonuc = sehirKontrol(root,plaka);
-        if(sonuc == 1)
-        {
-            char sehirAdi[20];
-            char bolge[5];
-            int yeniPlaka;
-            printf("Plaka: ");
-            scanf("%d",&yeniPlaka);
-            printf("Sehir adi: ");
-            scanf("%s",sehirAdi);
-            printf("Bolge adi: ");
-            scanf("%s",bolge);
-            int yeniPlakaKontrol = sehirKontrol(root,yeniPlaka);
-            int yeniIsimKontrol = sehirIsimKontrol(root,sehirAdi);
-            if(yeniPlakaKontrol == 1)
-            {
-                fprintf(yazilacakDosya,"%d Plaka numarasina ait baska bir sehir var.\n",yeniPlaka);
-                printf("Yeni plakaya ait baska bir sehir var.\n");
-                system("PAUSE");
-                sehirDuzenle();
-            }
-            else if(yeniIsimKontrol == 1)
-            {
-                fprintf(yazilacakDosya,"%s Sehir adina ait baska bir sehir var.\n",sehirAdi);
-                printf("Yeni isime ait baska bir sehir var.%s\n ",sehirAdi);
-                system("PAUSE");
-                sehirDuzenle();
-            }
-            else if(yeniPlakaKontrol == 0 && yeniIsimKontrol == 0)
-            {
-
-                // Sehri Ekledik.
-                root = ekle(root,yeniPlaka,sehirAdi,bolge,0);
-                struct node *yeniSehir;
-                struct node *eskiSehir;
-                yeniSehir = root;
-                eskiSehir = root;
-                while(yeniSehir->plaka != yeniPlaka)
-                {
-                    yeniSehir = yeniSehir->ileri;
-                }
-                while(eskiSehir->plaka != plaka)
-                {
-                    eskiSehir = eskiSehir->ileri;
-                }
-
-                fprintf(yazilacakDosya,"Duzenleme Oncesi: [%d] %s %s %d\n",eskiSehir->plaka,eskiSehir->sehirAdi,eskiSehir->bolge,eskiSehir->komsu_sayisi);
-                yeniSehir->komsuNode = eskiSehir->komsuNode;
-                yeniSehir->komsu_sayisi = eskiSehir->komsu_sayisi;
-                sil(root,eskiSehir,plaka);
-
-                struct node * Yiter;
-                Yiter = root;
-                while(Yiter != NULL)
-                {
-                    struct komsuNode *kroot;
-                    struct komsuNode *kiter;
-                    kroot = (void *)Yiter->komsuNode;
-                    kiter = kroot;
-                    int kont = 0;
-                    while(kiter != NULL)
-                    {
-                        if(kiter->komPlaka == plaka)
-                        {
-                            kroot = komekle(kroot,yeniPlaka,Yiter->plaka);
-                            kont = 1;
-                        }
-
-                        kiter = kiter->komIleri;
-                    }
-                    if(kont == 1)
-                    {
-                        komsuSilAuto(Yiter,plaka);
-                    }
-                    Yiter= Yiter->ileri;
-                }
-                fprintf(yazilacakDosya,"Duzenleme Sonrasi: [%d] %s %s %d\n",yeniSehir->plaka,yeniSehir->sehirAdi,yeniSehir->bolge,yeniSehir->komsu_sayisi);
-            }
-        }
-        else if(sonuc == 0)
-        {
-            // Sehir Yok
-            printf("Sehir yok eklemek ister misiniz?\n");
-            int soru;
-            printf("Hayir ise 0 Evet ise 1");
-            scanf("%d",&soru);
-            switch(soru)
-            {
-            case 0:
-                break;
-            case 1:
-                sehirEkle();
-                break;
-            }
-        }
-        */
 }
 void komsuEkle(struct node *r,int sehirPlaka)
 {
+    komsuEkleGo:
     fprintf(yazilacakDosya,"Komsu Ekle\n");
+
+    /*
     printf("Eklemek istediginiz komsunun plakasini giriniz: ");
     int plaka;
     scanf("%d",&plaka);
+    */
 
+    int plaka = -999;
+    char sehirAdi[20];
+    //printf("Silmek istenilen komsunun plakasi: ");
+    int secim;
+    menuAdiOlustur("000",1,1);
+    menuAdiOlustur("     ISLEMLER   ",10,0);
+    menuAdiOlustur("1-)Isime gore   ",11,0);
+    menuAdiOlustur("2-)Plakaya gore ",12,0);
+    menuAdiOlustur("0-)Geri        ",15,0);
+    menuAdiOlustur("000",1,1);
+    menuAdiOlustur("Secim Yap: ",15,2);
+    scanf("%d",&secim);
 
-
-    if(sehirKontrol(root,plaka)  == 0)
+    switch(secim)
     {
+    case 1:
+        printf("Sehir Adi giriniz: ");
+        struct node * iter;
+        iter = root;
+        scanf("%s",sehirAdi);
+        while(iter != NULL)
+        {
+            if(strcasecmp(iter->sehirAdi,sehirAdi) == 0)
+            {
+                plaka = iter->plaka;
+            }
+            iter = iter->ileri;
+
+        }
+
+
+        break;
+    case 2:
+
+        printf("Plaka giriniz: ");
+        scanf("%d",&plaka);
+        break;
+    case 0:
+        system("cls");
+        menu();
+        break;
+    }
+
+
+
+
+
+
+    if(sehirKontrol(root,plaka)  == 0 || plaka == -999)
+    {
+        if(secim == 1)
+        {
+            fprintf(yazilacakDosya,"%s Sehir adina ait boyle bir sehir yok.\n",sehirAdi);
+        printf("%s Sehir adina ait boyle bir sehir yok.\n",sehirAdi);
+        } else if(secim == 2){
         fprintf(yazilacakDosya,"%d Plaka numarasina ait boyle bir sehir yok.\n",plaka);
         printf("%d Plaka numarasina ait boyle bir sehir yok.\n",plaka);
-
+        }
+    system("PAUSE");
+    system("cls");
+    goto komsuEkleGo;
     }
-    else if(sehirKontrol(root,plaka) == 1)
+    else if(sehirKontrol(root,plaka) == 1 && plaka != -999)
     {
         if(plaka != sehirPlaka)
         {
@@ -1654,6 +1645,8 @@ void komsuEkle(struct node *r,int sehirPlaka)
         }
 
     }
+    system("PAUSE");
+    system("cls");
 }
 void komsuIslemMenu(struct node *iter,int sehirPlaka)
 {
