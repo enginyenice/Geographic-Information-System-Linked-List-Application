@@ -472,7 +472,7 @@ void komsuSil(struct node *r)
     char sehirAdi[20];
     //printf("Silmek istenilen komsunun plakasi: ");
     int secim;
-    komsuSilGo:
+komsuSilGo:
     menuAdiOlustur("000",1,1);
     menuAdiOlustur("     ISLEMLER   ",10,0);
     menuAdiOlustur("1-)Isime gore   ",11,0);
@@ -630,225 +630,6 @@ void sehirAra()
         kriterArama();
         break;
     }
-
-}
-void kriterArama()
-{
-    system("cls");
-    int min,max;
-    printf("Kritere gore arama\n");
-    printf("Minimum komsu sayisi giriniz: ");
-    scanf("%d",&min);
-    printf("Maxsimum degerini 0 tusuna basarak devre disi birakabilirsiniz.\n");
-    printf("Maksimum komsu sayisi giriniz: ");
-    scanf("%d",&max);
-    if(max == 0)
-    {
-        max = 999999;
-    }
-    struct node * iter;
-    iter = root;
-    fprintf(yazilacakDosya,"Minimum Komsu Sayisi: %d\n",min);
-    fprintf(yazilacakDosya,"Maksimum Komsu Sayisi(0 sonsuzu gosterir): %d\n",max);
-    // [SehirAdeti][KomsuAdeti]
-
-
-    struct node * sehirSay;
-    sehirSay = root;
-    int sehirSayisi = 0;
-    while(sehirSay != NULL)
-    {
-        sehirSayisi++;
-        sehirSay = sehirSay->ileri;
-    }
-
-    int plakalar[sehirSayisi][max];
-    int kosulluSehirler = 0;
-    while(iter != NULL)
-    {
-        if(iter->komsu_sayisi >= min && iter->komsu_sayisi<= max)
-        {
-
-
-            bolgeRenkleri(iter->bolge);
-            fprintf(yazilacakDosya,"Plaka:[%d] \t Sehir Adi:%s\tBolge: %s \t Komsu Sayisi: %d\n",iter->plaka,iter->sehirAdi,iter->bolge,iter->komsu_sayisi);
-            printf("Plaka:[%d] \t Sehir Adi:%s \t Bolge: %s \t Komsu Sayisi: %d\t",iter->plaka,iter->sehirAdi,iter->bolge,iter->komsu_sayisi);
-            struct komsuNode * komNode;
-            komNode = (void *)iter->komsuNode;
-            plakalar[kosulluSehirler][0] = iter->plaka;
-
-            int komSehirler = 1;
-            while(komNode != NULL)
-            {
-
-                plakalar[kosulluSehirler][komSehirler] = komNode->komPlaka;
-
-                renkDegistir(15);
-                //printf(" ->[%d]",komNode->komPlaka);
-                komSehirler++;
-                komNode = komNode->komIleri;
-
-            }
-            printf("\n");
-
-
-            kosulluSehirler++;
-        }
-
-        iter = iter->ileri;
-    }
-
-    printf("Ozel Arama Yapma Ister Misiniz ? (Hayir 0) (Evet 1)");
-    int ozelSecim;
-    scanf("%d",&ozelSecim);
-islemeDon:
-    if(ozelSecim == 1)
-    {
-        int plakaOrIsim;
-        menuAdiOlustur("000",1,1);
-        menuAdiOlustur("1-) Isime gore  ",4,0);
-        menuAdiOlustur("2-) Plakaya gore",3,0);
-        menuAdiOlustur("0-) Geri  git   ",3,0);
-        menuAdiOlustur("000",1,1);
-        menuAdiOlustur("Secim Yap: ",15,2);
-        scanf("%d",&plakaOrIsim);
-
-
-        int plaka1;
-        int plaka2;
-        char sehirAdi1[20];
-        char sehirAdi2[20];
-        if(plakaOrIsim != 0)
-        {
-
-
-            if(plakaOrIsim == 2)
-            {
-                printf("1. Sehrin Plakasini Giriniz: ");
-                scanf("%d",&plaka1);
-                printf("2. Sehrin Plakasini Giriniz: ");
-                scanf("%d",&plaka2);
-            }
-            else if(plakaOrIsim == 1)
-            {
-
-                printf("1. Sehrin Ismini Giriniz: ");
-                scanf("%s",sehirAdi1);
-                printf("2. Sehrin Ismini Giriniz: ");
-                scanf("%s",sehirAdi2);
-                plaka1 = sehirToPlaka(sehirAdi1);
-                plaka2 = sehirToPlaka(sehirAdi2);
-
-
-            }
-
-
-
-
-
-
-
-
-
-            if(plaka1 != -99 && plaka2 != -99)
-            {
-
-                int k = 0;
-                int sehir1Status = 0;
-                int sehir2Status = 0;
-                int sehir1Indis,sehir2Indis;
-                while(k <= sehirSayisi)
-                {
-                    if(plakalar[k][0] == plaka1)
-                    {
-                        sehir1Status = 1;
-                        sehir1Indis = k;
-                    }
-                    else if(plakalar[k][0] == plaka2)
-                    {
-                        sehir2Status = 1;
-                        sehir2Indis = k;
-                    }
-                    k++;
-                }
-
-                if(plakaOrIsim == 1)
-                {
-                    printf("%s ile %s Isismlerine Ortak Sehirler\n",sehirAdi1,sehirAdi2);
-                    fprintf(yazilacakDosya,"%s ile %s Isismlerine Ortak Sehirler\n",sehirAdi1,sehirAdi2);
-
-                }
-                else if(plakaOrIsim == 2)
-                {
-                    printf("%d ile %d Plakalarina Ortak Sehirler\n",plaka1,plaka2);
-                    fprintf(yazilacakDosya,"%d ile %d Plakalarina Ortak Sehirler\n",plaka1,plaka2);
-                }
-
-
-
-                if(sehir1Status == 1 && sehir2Status == 1)
-                {
-
-                    for(int i = 1; i< max; i++)
-                    {
-
-                        for(int k = 1; k< max; k++)
-                        {
-                            // printf("%d || %d\n",plakalar[sehir1Indis][i],plakalar[sehir2Indis][k]);
-                            if(plakalar[sehir1Indis][i] == plakalar[sehir2Indis][k])
-                            {
-                                sehirGetir(plakalar[sehir1Indis][i]);
-                            }
-
-
-                        }
-
-
-                    }
-
-
-                    // printf("Hersey yolunda");
-
-                }
-                else if(sehir1Status == 0)
-                {
-                    printf("Ilk girdiginiz sehir. Listede yok [%d]\n",plaka1);
-                    fprintf(yazilacakDosya,"Ilk girdiginiz sehir. Listede yok [%d]",plaka1);
-                    goto islemeDon;
-                }
-                else if(sehir2Status == 0)
-                {
-                    printf("Ikici girdiginiz sehir. Listede yok [%d]\n",plaka2);
-                    fprintf(yazilacakDosya,"Ikici girdiginiz sehir. Listede yok [%d]",plaka2);
-                    goto islemeDon;
-                }
-            }
-            else
-            {
-                if(plaka1 == -99)
-                {
-                    printf("Ilk girdiginiz sehir. Listede yok [%s]\n",sehirAdi1);
-                    fprintf(yazilacakDosya,"Ilk girdiginiz sehir. Listede yok [%s]\n",sehirAdi1);
-                    goto islemeDon;
-                }
-                else if(plaka2 == -99)
-                {
-                    printf("Ikinci girdiginiz sehir. Listede yok [%s]\n",sehirAdi2);
-                    fprintf(yazilacakDosya,"Ikinci girdiginiz sehir. Listede yok [%s]\n",sehirAdi2);
-                    goto islemeDon;
-                }
-
-            }
-        }
-        else if(plakaOrIsim == 0)
-        {
-            system("CLS");
-            menu();
-        }
-
-    }
-
-    system("PAUSE");
 
 }
 int sehirToPlaka(char sehirAdi[20])
@@ -1537,7 +1318,6 @@ void sehirDuzenle()
 }
 void komsuEkle(struct node *r,int sehirPlaka)
 {
-    komsuEkleGo:
     fprintf(yazilacakDosya,"Komsu Ekle\n");
 
     /*
@@ -1599,14 +1379,27 @@ void komsuEkle(struct node *r,int sehirPlaka)
         if(secim == 1)
         {
             fprintf(yazilacakDosya,"%s Sehir adina ait boyle bir sehir yok.\n",sehirAdi);
-        printf("%s Sehir adina ait boyle bir sehir yok.\n",sehirAdi);
-        } else if(secim == 2){
-        fprintf(yazilacakDosya,"%d Plaka numarasina ait boyle bir sehir yok.\n",plaka);
-        printf("%d Plaka numarasina ait boyle bir sehir yok.\n",plaka);
+            printf("%s Sehir adina ait boyle bir sehir yok.\n",sehirAdi);
+            printf("Sehir eklemek ister misiniz? 0 Hayir 1 Evet");
+            int karar;
+            scanf("%d",&karar);
+            if(karar == 0)
+                {menu();}
+            else if(karar == 1)
+                {sehirEkle();}
         }
-    system("PAUSE");
-    system("cls");
-    goto komsuEkleGo;
+        else if(secim == 2)
+        {
+            fprintf(yazilacakDosya,"%d Plaka numarasina ait boyle bir sehir yok.\n",plaka);
+            printf("%d Plaka numarasina ait boyle bir sehir yok.\n",plaka);
+            printf("Sehir eklemek ister misiniz? 0 Hayir 1 Evet");
+            int karar;
+            scanf("%d",&karar);
+            if(karar == 0)
+                {menu();}
+            else if(karar == 1)
+                {sehirEkle();}
+        }
     }
     else if(sehirKontrol(root,plaka) == 1 && plaka != -999)
     {
@@ -1765,3 +1558,233 @@ void bolgeRenkleri(char bolge[5])
 
 }
 
+void kriterArama()
+{
+    system("cls");
+    int min,max;
+    printf("Kritere gore arama\n");
+    printf("Minimum komsu sayisi giriniz: ");
+    scanf("%d",&min);
+    printf("Maxsimum degerini 0 tusuna basarak devre disi birakabilirsiniz.\n");
+    printf("Maksimum komsu sayisi giriniz: ");
+    scanf("%d",&max);
+    if(max == 0)
+    {
+        max = 999999;
+    }
+    struct node * iter;
+    iter = root;
+    fprintf(yazilacakDosya,"Minimum Komsu Sayisi: %d\n",min);
+    fprintf(yazilacakDosya,"Maksimum Komsu Sayisi(0 sonsuzu gosterir): %d\n",max);
+    // [SehirAdeti][KomsuAdeti]
+
+
+    struct node * sehirSay;
+    sehirSay = root;
+    int sehirSayisi = 0;
+    while(sehirSay != NULL)
+    {
+        sehirSayisi++;
+        sehirSay = sehirSay->ileri;
+    }
+
+    int plakalar[sehirSayisi][max];
+        for(int i = 0; i<sehirSayisi;i++)
+    {
+        for(int k = 1; k< max;k++)
+        {
+            plakalar[i][k] = -99;
+
+        }
+    }
+    int kosulluSehirler = 0;
+    while(iter != NULL)
+    {
+        if(iter->komsu_sayisi >= min && iter->komsu_sayisi<= max)
+        {
+
+
+            bolgeRenkleri(iter->bolge);
+            fprintf(yazilacakDosya,"Plaka:[%d] \t Sehir Adi:%s\tBolge: %s \t Komsu Sayisi: %d\n",iter->plaka,iter->sehirAdi,iter->bolge,iter->komsu_sayisi);
+            printf("Plaka:[%d] \t Sehir Adi:%s \t Bolge: %s \t Komsu Sayisi: %d\t",iter->plaka,iter->sehirAdi,iter->bolge,iter->komsu_sayisi);
+            struct komsuNode * komNode;
+            komNode = (void *)iter->komsuNode;
+            plakalar[kosulluSehirler][0] = iter->plaka;
+
+            int komSehirler = 1;
+            while(komNode != NULL)
+            {
+
+                plakalar[kosulluSehirler][komSehirler] = komNode->komPlaka;
+
+                renkDegistir(15);
+                //printf(" [%d] ",komNode->komPlaka);
+                komSehirler++;
+                komNode = komNode->komIleri;
+
+            }
+            printf("\n");
+            printf("------------------------------------------------------------\n");
+
+
+
+            kosulluSehirler++;
+        }
+
+        iter = iter->ileri;
+    }
+
+    printf("Ozel Arama Yapma Ister Misiniz ? (Hayir 0) (Evet 1)");
+    int ozelSecim;
+    scanf("%d",&ozelSecim);
+    if(ozelSecim == 1)
+    {
+        int plakaOrIsim;
+        menuAdiOlustur("000",1,1);
+        menuAdiOlustur("1-) Isime gore  ",4,0);
+        menuAdiOlustur("2-) Plakaya gore",3,0);
+        menuAdiOlustur("0-) Geri  git   ",3,0);
+        menuAdiOlustur("000",1,1);
+        menuAdiOlustur("Secim Yap: ",15,2);
+        scanf("%d",&plakaOrIsim);
+        int KriterPlakalar[sehirSayisi];
+        int sayac = 0;
+        KriterPlakalar[0] = -99;
+        hataliSecim:
+        if(plakaOrIsim == 1)
+        {
+            int temp = 0;
+            while(temp != 1)
+            {
+                char tempSehirAdi[20];
+
+                printf("%d. Sehir adini giriniz: Tamamlandiysa 0 giriniz: ", sayac+1);
+                scanf("%s",tempSehirAdi);
+                if(tempSehirAdi[0] == '0')
+                {
+                    temp = 1;
+                }
+                else
+                {
+
+                    int tempPlaka = sehirToPlaka(tempSehirAdi);
+                    if(tempPlaka == -99)
+                    {
+                        printf("%s adinda bir sehir sistemde kayitli degildir.\n",tempSehirAdi);
+                        goto hataliSecim;
+                    }
+                    KriterPlakalar[sayac] = tempPlaka;
+                    sayac++;
+                }
+            }
+
+        }
+        else if(plakaOrIsim == 2)
+        {
+            int temp = 0;
+
+            while(temp != 1)
+            {
+
+                int tempPlaka = -999;
+                printf("%d. Sehir plakasini giriniz: Tamamlandiysa 0 giriniz: ", sayac+1);
+                scanf("%d",&tempPlaka);
+                if(tempPlaka == 0)
+                {
+                    temp = 1;
+                }
+                else
+                {
+                    if(sehirKontrol(root,tempPlaka) == 0)
+                    {
+                        printf("%d plakali sehir sistemde kayitli degildir.\n",tempPlaka);
+                        goto hataliSecim;
+                    }
+                    KriterPlakalar[sayac] = tempPlaka;
+                    sayac++;
+                }
+            }
+        }
+        int i = 0;
+        while(i < sayac)
+        {
+            if(sehirKontrol(root,KriterPlakalar[i]) == 0)
+            {
+                printf("Boyle bir sehir sistemde yok %d",KriterPlakalar[i]);
+                printf("Arama menusune yonlendiriliyorsunuz");
+                system("PAUSE");
+                system("cls");
+                sehirAra();
+            }
+            i++;
+        }
+
+
+        /*
+        AnaSehirPlaka
+        KomsuSehirPlaka
+        EkrandanAlinanPlaka
+        A | Kom | Gir
+        1 | 2 3 |  1
+        2 | 1 3 |  2
+        3 | 1 2 |
+
+        */
+        int yokMesaji = 1;
+        if(KriterPlakalar[0] != -99)
+        {
+
+
+
+            printf("Aranan Sehirler\n");
+            fprintf(yazilacakDosya,"Aranan Sehirler\n");
+                for(int i = 0; i<sayac; i++)
+                {
+                    sehirGetir(KriterPlakalar[i]);
+                }
+            printf("Ortak Sehirler Listesi\n");
+            fprintf(yazilacakDosya,"Ortak Sehirler Listesi\n");
+
+            for(int i = 0; i< sehirSayisi; i++)
+            {
+                int varMi = 0;
+                for(int k = 1; k< max; k++)
+                {
+
+                    for(int l = 0; l< sayac; l++)
+                    {
+                        if(plakalar[i][k] == KriterPlakalar[l])
+                        {
+
+
+                            varMi++;
+                            //printf("%d %d %d %d\n",sayac,varMi,KriterPlakalar[l],plakalar[i][k]);
+                        }
+                    }
+
+
+
+
+                }
+                                if(varMi == sayac)
+                {
+                    //system("PAUSE");
+                    sehirGetir(plakalar[i][0]);
+                    yokMesaji = 0;
+                }
+                varMi = 0;
+
+
+            }
+        }
+        if(yokMesaji == 1 && KriterPlakalar[0] == -99)
+        {
+            printf("Bu kriterlere uygun ortak sehirler bulunamadi.\n");
+            fprintf(yazilacakDosya,"Bu kriterlere uygun ortak sehirler bulunamadi.\n");
+
+        }
+
+
+        system("PAUSE");
+    }
+}
