@@ -25,52 +25,54 @@ struct komsuNode
 
 
 /* Fonksiyonlar */
-void menu();
-void sehirEkle();
+
+/* Menuler */
+void menu(); // Menu Ekrani
+void sehirAra(); // Sehir Arama menusu
+void komsuIslemMenu(struct node *iter,int sehirPlaka); // Komsu islemleri menusu
+void sehirSil(); // Sehir silme menusu
+void komsuSil(struct node *r); // Komsu Silme menusu
+void sehirDuzenle(); // Sehir duzenleme menusu
 
 /* Arama */
-void sehirAra();
-void isimArama();
-void plakaArama();
-void bolgeAra();
-void kriterArama();
-int komsuPlakaBul(struct node *r, char sehirAdi[20]);
-void komsuIslemMenu(struct node *iter,int sehirPlaka);
-void isimArama();
-int sehirToPlaka(char sehirAdi[20]);
+void isimArama(); // Isime gore sehir arama
+void plakaArama(); // Plakaya gore sehir arama
+void bolgeAra(); // Bolge kisaltmasina gore sehirleri arama
+void kriterArama(); // Kriterlere gore sehir arama
+int komsuPlakaBul(struct node *r, char sehirAdi[20]); // Komsunun plakasinin bulunmasi
+
+int sehirToPlaka(char sehirAdi[20]); // Sehir Adini Plaka numarasina cevirme
 
 /* Okuma */
-FILE *yazilacakDosya;
-void dosyaOku(int status);
-void parcala(char kelime[200],int status);
-void dosyaYazma();
+FILE *yazilacakDosya; //Yazilacak dosyanin genel tanimi
+void dosyaOku(int status); // dosyanin Okunma islemi
+void parcala(char kelime[200],int status); // Dosyadan gelen satirin parcalanma islemi
+void dosyaYazma(); // Outputs yazma islemi
 
 /* Ekleme */
-struct node * ekle(struct node * r,int plaka,char sehirAdi[20],char bolge[5],int komsu_sayisi);
-struct komsuNode * komekle(struct komsuNode* r,int komPlaka,int sehirPlaka);
+struct node * ekle(struct node * r,int plaka,char sehirAdi[20],char bolge[5],int komsu_sayisi); // Sehir ekleme
+struct komsuNode * komekle(struct komsuNode* r,int komPlaka,int sehirPlaka); // Komsu Ekleme
+void sehirEkle(); // Sehir ekleme menusu
 
 /* Ekrana Cikti Verme */
-void ekranaYaz(struct node* r);
-void renkDegistir(int renk);
-void menuAdiOlustur(char menuAdi[100],int renk,int son);
-void sehirGetir(int plaka);
+void ekranaYaz(struct node* r); // Ekrana bilgileri cikartir
+void renkDegistir(int renk); // Ekran rengini degistirir
+void menuAdiOlustur(char menuAdi[100],int renk,int son); // Menu olusturur
+void sehirGetir(int plaka); // Sehir bilgisini getirir
+void komsulariniGetir(struct node * r); // Komsularini ekrana getirir
 
 /* Silme */
-void sehirSil();
-void komsuSilAuto(struct node *r,int plaka);
-struct node * sil(struct node * r,struct node *iter,int plaka);
-void komsuSil(struct node *r);
+void komsuSilAuto(struct node *r,int plaka); //Otomatik komsu silme
+struct node * sil(struct node * r,struct node *iter,int plaka); //  Sehir silme
+struct komsuNode * komsuyusil(struct komsuNode * kroot,struct komsuNode * kiter,struct node * r,int plaka); //komsu silme
 
 /* Kontroller */
-int komsuKontrol(struct node* r,int plaka,int sehirPlaka);
-void komsulariniGetir(struct node * r);
-int komsuKontrol(struct node* r,int plaka,int sehirPlaka);
-int sehirIsimKontrol(struct node *r,char sehirAdi[20]);
-void komsuCek();
-void sehirDuzenle();
-void bolgeRenkleri(char bolge[5]);
+int komsuKontrol(struct node* r,int plaka,int sehirPlaka); // Komsu kontrol
+int sehirIsimKontrol(struct node *r,char sehirAdi[20]); // Ayni isme ait sehir var mi
+void komsuCek(); // Komsularini ceker
+void bolgeRenkleri(char bolge[5]); // Bolge renklendirir
 
-
+/* Structlar Ilk Tutucular*/
 struct node * root;
 struct komsuNode * komsuRoot;
 
@@ -467,7 +469,7 @@ void menu()
 }
 void komsuSil(struct node *r)
 {
-
+    fprintf(yazilacakDosya,"\n");
     int plaka = -999;
     char sehirAdi[20];
     //printf("Silmek istenilen komsunun plakasi: ");
@@ -564,26 +566,35 @@ komsuSilGo:
 }
 void sehirEkle()
 {
-
+    fprintf(yazilacakDosya,"\n");
     system("cls");
     int plaka;
     char  sehirAdi[20];
     char  bolge[5];
     printf("Sehir Ekle:\n");
+    fprintf(yazilacakDosya,"Sehir Ekle:\n");
     printf("Plaka No:" );
     scanf("%d",&plaka);
+    fprintf(yazilacakDosya,"Eklenecek Plaka: %d\n",plaka);
     printf("Sehir Adi:" );
     scanf("%s",sehirAdi);
+    fprintf(yazilacakDosya,"Eklenecek Sehir Adi: %s\n",sehirAdi);
     printf("Bolge:" );
+
     scanf("%s",bolge);
+    fprintf(yazilacakDosya,"Eklenecek Bolge Adi: %s\n",bolge);
     if(sehirKontrol(root,plaka)  == 0)
     {
         if(sehirIsimKontrol(root,sehirAdi) == 0)
         {
             root = ekle(root,plaka,sehirAdi,bolge,0);
+            fprintf(yazilacakDosya,"Sehir Eklendi. Sehir Bilgisi:\n");
+            printf("Sehir Eklendi. Sehir Bilgisi:\n");
+            sehirGetir(plaka);
         }
         else
         {
+            fprintf(yazilacakDosya,"Boyle bir isimde sehir var. Tekrar ekleyemessiniz\n");
             printf("Boyle bir isimde sehir var. Tekrar ekleyemessiniz\n");
         }
 
@@ -592,17 +603,20 @@ void sehirEkle()
     else if(sehirKontrol(root,plaka) == 1)
     {
         printf("Boyle bir plakada sehir var. Tekrar ekleyemessiniz\n");
+        fprintf(yazilacakDosya,"Boyle bir plakada sehir var. Tekrar ekleyemessiniz\n");
     }
     else
     {
         printf("Plaka Hatali %d",plaka);
+        fprintf(yazilacakDosya,"Plaka Hatali %d",plaka);
     }
 
 
 }
 void sehirAra()
 {
-    fprintf(yazilacakDosya,"Arama Islemi \n");
+    fprintf(yazilacakDosya,"\n");
+    fprintf(yazilacakDosya,"Arama Islemi\n");
     system("cls");
     int secim;
     menuAdiOlustur("000",1,1);
@@ -678,8 +692,8 @@ void isimArama()
             bolgeRenkleri(iter->bolge);
             fprintf(yazilacakDosya,"Sehir Bilgileri [Isim Aramasi][%s]\n",sehirAdi);
             printf("\n\nSehir Bilgileri [Isim Aramasi][%s]\n",sehirAdi);
-            fprintf(yazilacakDosya,"Plaka: %d\t Sehir Adi: %s\t Bolge: %s\n\n",iter->plaka,iter->sehirAdi,iter->bolge);
-            printf("Plaka: %d\t Sehir Adi: %s\t Bolge: %s\n\n",iter->plaka,iter->sehirAdi,iter->bolge);
+            fprintf(yazilacakDosya,"Plaka: %d\t Sehir Adi: %s\t Bolge: %s\n",iter->plaka,iter->sehirAdi,iter->bolge);
+            printf("Plaka: %d\t Sehir Adi: %s\t Bolge: %s\n",iter->plaka,iter->sehirAdi,iter->bolge);
             komsulariniGetir(iter);
             fprintf(yazilacakDosya,"Toplam Komsu Sayisi: %d\n",iter->komsu_sayisi);
             printf("Toplam Komsu Sayisi: %d\n",iter->komsu_sayisi);
@@ -727,8 +741,8 @@ void plakaArama()
             bolgeRenkleri(iter->bolge);
             fprintf(yazilacakDosya,"Sehir Bilgileri [Plaka Aramasi][%d]\n",plaka);
             printf("\n\nSehir Bilgileri [Plaka Aramasi][%d]\n",plaka);
-            fprintf(yazilacakDosya,"Plaka: %d\t Sehir Adi: %s\t Bolge: %s\n\n",iter->plaka,iter->sehirAdi,iter->bolge);
-            printf("Plaka: %d\t Sehir Adi: %s\t Bolge: %s\n\n",iter->plaka,iter->sehirAdi,iter->bolge);
+            fprintf(yazilacakDosya,"Plaka: %d\t Sehir Adi: %s\t Bolge: %s\n",iter->plaka,iter->sehirAdi,iter->bolge);
+            printf("Plaka: %d\t Sehir Adi: %s\t Bolge: %s\n",iter->plaka,iter->sehirAdi,iter->bolge);
             komsulariniGetir(iter);
             fprintf(yazilacakDosya,"Toplam Komsu Sayisi: %d\n",iter->komsu_sayisi);
             printf("Toplam Komsu Sayisi: %d\n",iter->komsu_sayisi);
@@ -794,13 +808,6 @@ void dosyaOku(int status)
     dosya = fopen("sehirler.txt","r");
     if(dosya)
     {
-        /*
-        if(status == 0)
-            printf("Sehir Listesi Aktariliyor...\n");
-        else if(status == 1)
-            printf("Komsu Listesi Aktariliyor...\n");
-        */
-
         char birkelime[200];
         int c;
         do
@@ -928,6 +935,7 @@ void parcala(char kelime[200],int status) // 0 gonderirsen sehir ceker 1 gonderi
 }
 void bolgeAra()
 {
+    fprintf(yazilacakDosya,"\n");
     char bolge[5];
     printf("Bolge kisaltmasini giriniz: ");
     scanf("%s",bolge);
@@ -958,6 +966,7 @@ void bolgeAra()
 }
 void sehirSil()
 {
+    fprintf(yazilacakDosya,"\n");
     system("cls");
     fprintf(yazilacakDosya,"Sehir Silme\n");
     int plaka = 0;
@@ -1174,6 +1183,7 @@ void komsuSilAuto(struct node *r,int plaka)
 }
 void sehirDuzenle()
 {
+    fprintf(yazilacakDosya,"\n");
     system("cls");
     fprintf(yazilacakDosya,"Sehir Duzenle\n");
     int plaka = 0;
@@ -1318,6 +1328,7 @@ void sehirDuzenle()
 }
 void komsuEkle(struct node *r,int sehirPlaka)
 {
+    fprintf(yazilacakDosya,"\n");
     fprintf(yazilacakDosya,"Komsu Ekle\n");
 
     /*
@@ -1384,9 +1395,13 @@ void komsuEkle(struct node *r,int sehirPlaka)
             int karar;
             scanf("%d",&karar);
             if(karar == 0)
-                {menu();}
+            {
+                menu();
+            }
             else if(karar == 1)
-                {sehirEkle();}
+            {
+                sehirEkle();
+            }
         }
         else if(secim == 2)
         {
@@ -1396,9 +1411,13 @@ void komsuEkle(struct node *r,int sehirPlaka)
             int karar;
             scanf("%d",&karar);
             if(karar == 0)
-                {menu();}
+            {
+                menu();
+            }
             else if(karar == 1)
-                {sehirEkle();}
+            {
+                sehirEkle();
+            }
         }
     }
     else if(sehirKontrol(root,plaka) == 1 && plaka != -999)
@@ -1560,6 +1579,7 @@ void bolgeRenkleri(char bolge[5])
 
 void kriterArama()
 {
+    fprintf(yazilacakDosya,"\n");
     system("cls");
     int min,max;
     printf("Kritere gore arama\n");
@@ -1589,9 +1609,9 @@ void kriterArama()
     }
 
     int plakalar[sehirSayisi][max];
-        for(int i = 0; i<sehirSayisi;i++)
+    for(int i = 0; i<sehirSayisi; i++)
     {
-        for(int k = 1; k< max;k++)
+        for(int k = 1; k< max; k++)
         {
             plakalar[i][k] = -99;
 
@@ -1650,7 +1670,7 @@ void kriterArama()
         int KriterPlakalar[sehirSayisi];
         int sayac = 0;
         KriterPlakalar[0] = -99;
-        hataliSecim:
+hataliSecim:
         if(plakaOrIsim == 1)
         {
             int temp = 0;
@@ -1738,10 +1758,10 @@ void kriterArama()
 
             printf("Aranan Sehirler\n");
             fprintf(yazilacakDosya,"Aranan Sehirler\n");
-                for(int i = 0; i<sayac; i++)
-                {
-                    sehirGetir(KriterPlakalar[i]);
-                }
+            for(int i = 0; i<sayac; i++)
+            {
+                sehirGetir(KriterPlakalar[i]);
+            }
             printf("Ortak Sehirler Listesi\n");
             fprintf(yazilacakDosya,"Ortak Sehirler Listesi\n");
 
@@ -1766,7 +1786,7 @@ void kriterArama()
 
 
                 }
-                                if(varMi == sayac)
+                if(varMi == sayac)
                 {
                     //system("PAUSE");
                     sehirGetir(plakalar[i][0]);
