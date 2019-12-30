@@ -1,4 +1,0 @@
-1,A,AK,B,C
-2,B,GA,A,C
-3,C,EG,A,B
-4,C,EG,B
