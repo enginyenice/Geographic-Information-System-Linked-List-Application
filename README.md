@@ -27,7 +27,7 @@ gösterildiği bir uygulama yapılmıştır. Bu sayede kayıtlı olan bir şehri
 çalıştırmadan sonra proje klasörünüzün Dosya_yolu/bin/debug klasörünün içerisinde projenin .exe dosyası oluşacaktır.
 Bu dosya ile kullanmaya devam edebilirsiniz.
 
-### ----------- ÇIKTI KAYIRLARI NEREDE -----------
+### ----------- ÇIKTI KAYITLARI NEREDE -----------
 
 > Proje çalıştırıldıktan sonra projenin ana dizininde cikti.txt oluşturulmaktadır.
 
