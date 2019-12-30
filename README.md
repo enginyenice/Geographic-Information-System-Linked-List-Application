@@ -9,10 +9,10 @@ PROJE DİLİ		 : C
 
 ### ----------------KLASÖR İÇERİĞİ----------------
 > 1) Kaynak-Kodlar.zip  (Projenin kaynak kodlarının sıkıştırılmış hali.)
-2) 190201133.txt      (Projenin tüm kodları içersinde bulunmaktadır.)
-3) Rapor.docx         (IEEE formatında hazırlanmış rapor)
-4) KabaKod.docx       (Rapor dosyasına ek olarak verilmiştir. İçerisinde projenin kaba kod hali bulunmaktadır.)
-5) readme.txt         (Paylaşılan belgelerin ne anlama geldiğini açıklayan belge.)
+> 2) 190201133.txt      (Projenin tüm kodları içersinde bulunmaktadır.)
+> 3) Rapor.docx         (IEEE formatında hazırlanmış rapor)
+> 4) KabaKod.docx       (Rapor dosyasına ek olarak verilmiştir. İçerisinde projenin kaba kod hali bulunmaktadır.)
+> 5) readme.txt         (Paylaşılan belgelerin ne anlama geldiğini açıklayan belge.)
 
 ###-----------------PROJENİN ÖZETİ---------------
 > Şehirlerin kendine ait bilgilerinin bulunduğu bir bağlı listenin içerisinde komşularının eklenerek komşuluk ilişkilerininin 
