@@ -1,8 +1,0 @@
-# depslib dependency file v1.0
-1577534382 source:c:\programlamalab-3\main.c
-	<stdio.h>
-	<string.h>
-	<stdlib.h>
-	<time.h>
-	<windows.h>
-
