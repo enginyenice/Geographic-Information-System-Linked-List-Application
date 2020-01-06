@@ -1,12 +1,9 @@
-BLM 209 Programlama Laboratuvarı I Güz 201 9
+BLM 209 Programlama Laboratuvarı I Güz 2019
 
 # Proje 3 : Bağlı Liste Uygulaması
 
 ```
-Son Teslim Tarihi: 29 Aralık 2019
-```
-```
-Arş. Gör. Abdurrahman Gün, Arş. Gör. Burcu KIR SAVAŞ
+Kodlayan: Engin Yenice
 ```
 Coğrafi Bilgi Sistemi
 (CBS), dünya üzerindeki karmaşık sosyal,
@@ -37,7 +34,9 @@ yardımıyla tutulabilir. Artık her bir şehir bir bağlı listenin düğümler
 
 Şehirler “sehirler.txt” dosyası içinde aşağıdaki formatta tutulmaktadır:
 
-**<plaka kodu><,><sehir ismi><,><bulunduğu bolge><,><komşu sehir ismi><,><komşu sehir ismi>..........**
+```
+<plaka kodu><,><sehir ismi><,><bulunduğu bolge><,><komşu sehir ismi><,><komşu sehir ismi>..........
+```
 
 Bulunduğu bölge için şu kısaltmaları kullanınız: Akdeniz (AK), Doğu Anadolu (DA), Ege (EG), Güneydoğu
 Anadolu (GA), İç Anadolu (İA), Marmara (MA) ve Karadeniz (KA).
