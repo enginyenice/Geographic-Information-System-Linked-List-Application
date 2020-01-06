@@ -95,23 +95,6 @@ güncellenmelidir.
 - Proje ile ilgili bilgilendirme toplantısına katılımınız ve anlaşılmayan noktaları mutlaka sormanız,
 sunumda problem yaşamamanız için çok önemlidir.
 
-## Ödev Teslimi ve Proje Sunumları
-
-- Proje sunum gününde raporu (hard copy) teslim etmeniz gerekmektedir. Rapor IEEE formatında (önceki
-yıllarda verilen formatta) 4 sayfa, akış diagramı veya yalancı kod içeren özet, giriş, yöntem, sonuç ve
-kaynakça bölümünden oluşmalıdır.
-- Dersin takibi projenin teslimi dahil edestek.kocaeli.edu.tr sistemi üzerinden yapılacaktır. edestek
-sisteminde belirtilen tarihten sonra getirilen projeler kabul edilmeyecektir.
-- Proje ile ilgili sorular edestek sistemindeki forum üzerinden Arş. Gör. Abdurrahman Gün veya Arş. Gör.
-Burcu Kır Savaş’a sorulabilir.
-
-
-- Demo tarihleri daha sonra duyurulacaktır.
-- Demo sırasında algoritma, geliştirdiğiniz kodun çeşitli kısımlarının ne amaçla yazıldığı ve geliştirme
-ortamı hakkında sorular sorulabilir. **Ayrıca yine demo sırasında içeriği değiştirilmiş “sehirler.txt”
-dosyasından programın veri çekmesi istenecektir.**
-- Kullandığınız herhangi bir satır kodu açıklamanız istenebilir.
-
 ## Bonus
 
 - Belli bir sayı aralığında komşu sayısına sahip şehirlerden belirli ortak komşulara sahip olan şehirlerin
