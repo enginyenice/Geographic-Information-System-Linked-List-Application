@@ -1,12 +1,12 @@
 ### ----------------PROJE BİLGİSİ----------------
 
 > PROJE BAŞLANGIÇ          : 03 Aralık 2019
-• PROJE BİTİŞ     	 : 29 Aralık 2019 
-• PROJE DERSİ     	 : Programlama Labaratuvarı-I
-• PROJE KONUSU    	 : BAĞLI LİSTE UYGULAMASI 
-• PROJE DİLİ		 : C
-• ÖĞRENCİNİN ADI SOYADI    : ENGİN YENİCE
-• ÖĞRENCİNİN OKUL NUMARASI : 190201133
+> PROJE BİTİŞ     	 : 29 Aralık 2019 
+> PROJE DERSİ     	 : Programlama Labaratuvarı-I
+> PROJE KONUSU    	 : BAĞLI LİSTE UYGULAMASI 
+> PROJE DİLİ		 : C
+> ÖĞRENCİNİN ADI SOYADI    : ENGİN YENİCE
+> ÖĞRENCİNİN OKUL NUMARASI : 190201133
 ### ----------------KLASÖR İÇERİĞİ----------------
 
 > 1) Kaynak-Kodlar.zip  (Projenin kaynak kodlarının sıkıştırılmış hali.)
